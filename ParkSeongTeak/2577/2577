@@ -10,6 +10,7 @@ int main() {
 	
 	int A, B, C;
 	int arr[10] = { 0, };
+	
 	cin >> A >> B >> C;
 	
 	int ans = A * B * C;
