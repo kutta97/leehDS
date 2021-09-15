@@ -8,11 +8,12 @@ class Array {
 	int min = 987654321;
 	int max = -987654321;
 public:
-	Array(int size);		//»ı¼ºÀÚ size¸¸Å­ÀÇ °ø°£È®º¸
-	void SetArr();			//size ¸¸Å­ÀÇ ¼ö ¹Ş¾Æ¿È	
-	void GetMin();			//ÃÖ¼Ú°ª Ãâ·Â
-	void GetMax();			//ÃÖ´ñ°ª Ãâ·Â
-	int num(int num);		//arrÀÇ numÀ§Ä¡ÀÇ °ª
+	Array(int size);		//ìƒì„±ì sizeë§Œí¼ì˜ ê³µê°„í™•ë³´
+	~Array();
+	void SetArr();			//size ë§Œí¼ì˜ ìˆ˜ ë°›ì•„ì˜´	
+	void GetMin();			//ìµœì†Ÿê°’ ì¶œë ¥
+	void GetMax();			//ìµœëŒ“ê°’ ì¶œë ¥
+	int num(int num);		//arrì˜ numìœ„ì¹˜ì˜ ê°’
 };
 
 
