@@ -11,11 +11,13 @@ class Array {
 	int maxNum;
 	int minNum;
 public:
-	Array(int size);		//»ı¼ºÀÚ size¸¸Å­ÀÇ °ø°£È®º¸
-	int num(int num);		//arrÀÇ numÀ§Ä¡ÀÇ °ª
-	void SetArr();			//size ¸¸Å­ÀÇ ¼ö ¹Ş¾Æ¿È	
+	Array(int size);		//ìƒì„±ì sizeë§Œí¼ì˜ ê³µê°„í™•ë³´
+	~Array();
+
+	int num(int num);		//arrì˜ numìœ„ì¹˜ì˜ ê°’
+	void SetArr();			//size ë§Œí¼ì˜ ìˆ˜ ë°›ì•„ì˜´	
 	
-	//type GetNum()Çü½ÄÀº return Num 
+	//type GetNum()í˜•ì‹ì€ return Num 
 	int GetMin();			
 	int GetMax();			
 	int GetMaxNum();		
