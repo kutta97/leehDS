@@ -4,7 +4,10 @@
 using namespace std;
 
 Array::Array(int size) : size(size) {
-	arr = new int[size];
+	arr = new int[size] {0,};
+}
+Array::~Array(){
+	delete[] arr;
 }
 
 void Array::SetArr() {
