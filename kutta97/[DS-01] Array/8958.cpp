@@ -28,6 +28,7 @@ int main() {
 		cout << getScore(quiz[i]) << '\n';
 		delete[] quiz[i];
 	}
+	delete[] quiz;
 
 	return 0;
 }
