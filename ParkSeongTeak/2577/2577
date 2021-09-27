@@ -1,0 +1,26 @@
+#include<iostream>
+using namespace std;
+
+//A*B*C <1000 000 000 -> 21억미만 int
+int main() {
+	
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+	
+	int A, B, C;
+	int arr[10] = { 0, };
+	
+	cin >> A >> B >> C;
+	
+	int ans = A * B * C;
+	
+	
+	while (ans > 0) {
+		arr[ans % 10]++;                //1의자리부터 숫자 세고 지움
+		ans = ans / 10;
+	}
+	for (int i = 0; i < 10; i++) {
+		cout << arr[i] << "\n";
+	}
+}

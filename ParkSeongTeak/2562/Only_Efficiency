@@ -1,0 +1,24 @@
+#include<iostream>
+#include<limits.h>
+
+using namespace std;
+
+int main() {
+	
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int arr[9];
+	int MAX = INT_MIN;
+	int num;
+
+	for (int i = 0; i < 9; i++) {
+		cin >> arr[i];
+		if (MAX < arr[i]) {
+			MAX = arr[i];
+			num = i;
+		}
+	}
+	cout << MAX << "\n" << num+1;
+}
