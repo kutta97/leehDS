@@ -3,10 +3,6 @@
 #include <algorithm>
 using namespace std;
 
-#include <iostream>
-#include <string>
-using namespace std;
-
 class Stack
 {
 private:
