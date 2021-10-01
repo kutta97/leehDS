@@ -1,0 +1,48 @@
+#include<iostream>
+#include"Stack.hpp"
+#include<string>
+#include<map>
+
+using namespace std; 
+
+int main()
+{
+	cout << "Hello";
+	
+	int N;
+	cin >> N;
+	Stack<int> stack;
+	string str;
+	map < string, int> m{ {"push",0}, {"pop",1}, {"size",2}, {"empty",3}, {"top",4}};
+
+	
+	for (int i = 0; i < N; i++) {
+		cin >> str;
+		
+		switch (m[str])
+		{
+		case 0 :
+			int tmp;
+			cin >> tmp;
+			stack.Push(tmp);
+			break;
+		case 1:
+			cout << stack.Pop()<<"\n";
+			break;
+		case 2:
+			cout << stack.Size() << "\n";
+			break;
+		case 3:
+			cout<< stack.Empty() << "\n";
+			break;
+		case 4:
+			cout << stack.Top() << "\n";
+			break;
+
+
+		default:
+			break;
+		}
+	}
+	
+}
