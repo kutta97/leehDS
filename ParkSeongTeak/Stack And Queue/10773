@@ -1,0 +1,25 @@
+#include<iostream>
+#include"Stack.hpp"
+
+using namespace std;
+int main() {
+	Stack<int> Money;
+	int N;
+	int num;
+	int sum = 0;
+	cin >> N;
+	for (int i = 0; i < N; i++) {
+		cin >> num;
+		if (num == 0) {
+			Money.Pop();
+		}
+		else {
+			Money.Push(num);
+		}
+
+	}
+	while (!Money.Empty()) {
+		sum += Money.Pop();
+	}
+	cout << sum;
+}
