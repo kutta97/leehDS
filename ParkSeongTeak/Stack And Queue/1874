@@ -1,0 +1,48 @@
+#include<iostream>
+#include<vector>
+#include"stack.h"
+using namespace std;
+
+//문제가 stack으로 입력값을 만드는것 stack에는 1 2 3 ...으로 들어옴 
+int main() {
+
+	int N;
+	cin >> N;
+
+	vector<int> List(N);
+	Stack<int> Stack;
+	vector<char> PlusMine;
+
+	int idx = 1;
+
+	for (int i = 0; i < N; i++) {
+		cin >> List[i];
+	}
+
+	for (int i = 0; i < N; i++) {
+		while (List[i] >= idx) {
+			Stack.Push(idx);
+			idx++;
+			PlusMine.push_back('+');
+
+		}
+		if (Stack.Top() == List[i]) {
+			Stack.Pop();
+			PlusMine.push_back('-');
+
+
+		}
+		else if (Stack.Top() > List[i]) {
+			cout << "NO";
+			break;
+		}
+	}
+	if (Stack.Empty()) {
+		for (int i = 0; i < PlusMine.size(); i++) {
+			cout << PlusMine[i] << "\n";
+		}
+	}
+
+
+}
+
