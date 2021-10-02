@@ -17,6 +17,7 @@ Stack<T>::~Stack() {
 template<class T>
 void Stack<T>::ChangeSizeID(T*& Mem, const int oldsize, const int newSize)
 {
+	capa = newSize;
 	T* tmp = new T[newSize];
 	int copysize = min(oldsize, newSize);
 	copy(Mem, Mem + copysize, tmp);
