@@ -1,0 +1,32 @@
+#include<iostream>
+#include<queue>
+#include<string>
+#include<vector>
+using namespace std;
+
+
+int main() {
+
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	queue<int> que;
+	int n;
+	cin >> n;
+
+	for (int i = 1; i <= n; i++) {
+		que.push(i);
+	}
+	if (n != 1) {
+		while (1) {
+			que.pop();
+			if (que.size() == 1) break;
+			que.push(que.front());
+			que.pop();
+		}
+	}
+
+	cout << que.front();
+
+}
