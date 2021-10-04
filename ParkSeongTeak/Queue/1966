@@ -1,0 +1,57 @@
+#include<iostream>
+#include<queue>
+#include<algorithm>
+using namespace std;
+
+bool FindTop(queue<pair<int,int>> *, priority_queue<int> *,int);
+
+int main() {
+
+	int T;
+	cin >> T;
+	for (int i = 0; i < T; i++) {
+
+		queue<pair<int, int>> que;
+		priority_queue<int> pq;					//우선순위 큐는 힙 문제긴 합니다만 이 문제는 일딴 큐도 들어는가니까...
+
+		int N, M, tmp;
+		pair<int, int> target;
+		cin >> N >> M;
+		for (int j = 0; j < N; j++) {
+			cin >> tmp;
+			que.push({ tmp,j });
+			pq.push(tmp);
+			if (j == M)
+				target = { tmp,j };
+		}
+
+		while (pq.top() >= target.first) {
+			if (FindTop(&que, &pq, M)) {
+				break;
+			}
+		}
+
+	}
+
+}
+
+bool FindTop(queue<pair<int, int>> * que, priority_queue<int> * pq, int M) {
+	static int cnt = 1;
+	if (pq->top() == que->front().first) {
+		if (que->front().second == M) {
+
+			cout << cnt << "\n";
+			cnt = 1;
+			return true;
+
+		}
+		cnt += 1;
+		pq -> pop();
+		que -> pop();
+	}
+	else {
+		que->push(que->front());
+		que->pop();
+	}
+	return false;
+}
