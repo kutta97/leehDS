@@ -1,0 +1,38 @@
+
+#include<iostream>
+#include<string>
+#include"stack.h"
+using namespace std;
+
+bool CloseSeq(const string,Stack<char>*);	// 이걸 굳이 굳이 또 다른 헤더 파서 만드는게 좋을까요?
+
+int main() {
+	
+	int N;
+	cin >> N;
+	
+	
+	string str;
+	
+	for (int i = 0; i < N; i++) {
+		cin >> str;
+		Stack<char> stack;
+		if (CloseSeq(str,&stack) && stack.Empty()) {
+			cout << "YES" << "\n";
+		}
+		else {
+			cout << "NO" << "\n";
+
+		}
+	}
+}
+bool CloseSeq(const string str, Stack<char>* stack) {
+	for (int i = 0; i < str.size(); i++) {
+		if (str[i] == '(') stack->Push('(');
+		else if (str[i] == ')') {
+			if (stack->Pop() != '(') return false;
+		}
+	}
+	return true;
+}
+
