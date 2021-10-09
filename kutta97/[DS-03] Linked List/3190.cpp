@@ -1,60 +1,46 @@
 // 뱀
 #include <iostream>
-#include <list>
+#include "snake.h"
 using namespace std;
 
-# define EMPTY 0
-# define APPLE 1
-# define SNAKE 2
+Snake::Snake() {
+	snake.push_front(Position(0, 0));
+	dir = E;
+}
 
-enum directions { N, E, S, W };
+void Snake::setDir(char C) {
+	if (C == 'D') { dir = (dir + 1) % 4; }
+	if (C == 'L') { dir = (dir == 0) ?  3 : (dir - 1); }
+}
 
-struct Position {
-	Position() {}
-	Position(int xx, int yy): x(xx), y(yy) {}
-	int x, y;
-} movement[4] = { Position(-1, 0), Position(0,1), Position(1, 0), Position(0, -1) };
+Position Snake::nextMove() {
+	int newX = snake.front().x + movement[dir].x;
+	int newY = snake.front().y + movement[dir].y;
+	return Position(newX, newY);
+}
 
-class Snake {
-private:
-	list<Position> snake;
-	int dir;
+void Snake::moveHead(Position newMove) {
+	snake.push_front(Position(newMove.x, newMove.y));
+}
 
-public:
-	Snake() {
-		snake.push_front(Position(0, 0));
-		dir = E;
-	}
-	void setDir(char C) {
-		if (C == 'D') { dir = (dir + 1) % 4; }
-		if (C == 'L') { dir = (dir == 0) ?  3 : (dir - 1); }
-	}
-	Position nextMove() {
-		int newX = snake.front().x + movement[dir].x;
-		int newY = snake.front().y + movement[dir].y;
-		return Position(newX, newY);
-	}
-	void moveHead(Position newMove) {
-		snake.push_front(Position(newMove.x, newMove.y));
-	}
-	Position moveTail() {
-		Position tail = snake.back();
-		snake.pop_back();
-		return tail;
-	}
-	bool isDead(int x, int y, int N, int value) {
-	if (x < 0 || x >= N) return false;
-	if (y < 0 || y >= N) return false;
+Position Snake::moveTail() {
+	Position tail = snake.back();
+	snake.pop_back();
+	return tail;
+}
+
+bool Snake::isDead(Position nextMove, int value, int N) {
+	if (nextMove.x < 0 || nextMove.x >= N) return false;
+	if (nextMove.y < 0 || nextMove.y >= N) return false;
 	if (value == SNAKE) return false;
 	return true;
-	}
-};
+}
 
 int main() {
 	int N, K; // 보드의 크기 N, 사과의 개수 K
 	int L, X; // 방향 변환 횟수 L, 방향변환 시간 X
 	char C; // 방향 변환 정보
-	int map[100][100] = { 0, };
+	int map[100][100] = { { 0, }, };
 	Snake snake;
 	int time = 1;
 
@@ -71,7 +57,7 @@ int main() {
 	while (true) {
 		Position nextMove = snake.nextMove();
 		int nextMoveVal = map[nextMove.x][nextMove.y];
-		if (snake.isDead(nextMove.x, nextMove.y, N, nextMoveVal))
+		if (snake.isDead(nextMove, nextMoveVal, N))
 		{
 			if (nextMoveVal != APPLE) {
 				Position tail = snake.moveTail();
