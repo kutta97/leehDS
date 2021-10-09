@@ -30,10 +30,10 @@ Position Snake::moveTail() {
 }
 
 bool Snake::isDead(Position nextMove, int value, int N) {
-	if (nextMove.x < 0 || nextMove.x >= N) return false;
-	if (nextMove.y < 0 || nextMove.y >= N) return false;
-	if (value == SNAKE) return false;
-	return true;
+	if (nextMove.x < 0 || nextMove.x >= N) return true;
+	if (nextMove.y < 0 || nextMove.y >= N) return true;
+	if (value == SNAKE) return true;
+	return false;
 }
 
 int main() {
@@ -48,27 +48,27 @@ int main() {
 	for (int i = 0; i < K; i++) {
 		int x, y;
 		cin >> x >> y;
-		map[x - 1][y - 1] = 1;
+		map[x - 1][y - 1] = APPLE;
 	}
-	map[0][0] = 2;
+	map[0][0] = SNAKE;
 
 	cin >> L;
 	cin >> X >> C;
 	while (true) {
 		Position nextMove = snake.nextMove();
 		int nextMoveVal = map[nextMove.x][nextMove.y];
-		if (snake.isDead(nextMove, nextMoveVal, N))
-		{
-			if (nextMoveVal != APPLE) {
-				Position tail = snake.moveTail();
-				map[tail.x][tail.y] = EMPTY;
-			}
-			snake.moveHead(nextMove);
-			map[nextMove.x][nextMove.y] = SNAKE;
-		} else {
+		
+		if (snake.isDead(nextMove, nextMoveVal, N)) {
 			cout << time << '\n';
 			return (0);
 		}
+
+		if (nextMoveVal != APPLE) {
+			Position tail = snake.moveTail();
+			map[tail.x][tail.y] = EMPTY;
+		}
+		snake.moveHead(nextMove);
+		map[nextMove.x][nextMove.y] = SNAKE;
 
 		if (time == X) {
 			snake.setDir(C); L--;
