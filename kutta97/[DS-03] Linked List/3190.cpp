@@ -57,18 +57,18 @@ int main() {
 	while (true) {
 		Position nextMove = snake.nextMove();
 		int nextMoveVal = map[nextMove.x][nextMove.y];
-		
+
 		if (snake.isDead(nextMove, nextMoveVal, N)) {
 			cout << time << '\n';
 			return (0);
 		}
 
+		snake.moveHead(nextMove);
+		map[nextMove.x][nextMove.y] = SNAKE;
 		if (nextMoveVal != APPLE) {
 			Position tail = snake.moveTail();
 			map[tail.x][tail.y] = EMPTY;
 		}
-		snake.moveHead(nextMove);
-		map[nextMove.x][nextMove.y] = SNAKE;
 
 		if (time == X) {
 			snake.setDir(C); L--;
