@@ -1,0 +1,46 @@
+
+#include<iostream>
+#include"Linked_List.h"
+
+using namespace std;
+
+
+
+int main() {
+	LinkedList<pair<int, int>> list;
+	int n;
+	pair<int, int> tmp;
+
+	cin >> n;
+	for (int i = 1; i <= n; i++) {
+		tmp.first = i;
+		cin >> tmp.second;
+		list.push_back(tmp);
+	}
+	
+	while (list.size() != 1) {
+		tmp = list.Now();
+		list.pop_Now();
+		cout << tmp.first<<" ";
+		
+
+		if (tmp.second > 0) {
+			for (int i = 0; i < tmp.second-1; i++) {
+				list.Next();
+				
+			}
+		}
+		else {
+			for (int i = tmp.second; i < 0   ; i++) {
+				list.Prev();
+				
+
+			}
+		}
+		
+
+	}
+	
+	cout << list.Now().first;
+	
+}
