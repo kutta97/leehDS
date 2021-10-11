@@ -6,11 +6,13 @@ using namespace std;
 
 template<class T>
 LinkedList<T>::LinkedList() {
+	
 	start.back = &end;
 	end.front = &start;
 	start.front = &end;
 	end.back = &start;
 	sizeint = 0;
+	now = &start;
 }
 
 template<class T>
@@ -30,10 +32,30 @@ void LinkedList<T>::push_back(T data) {
 	tmpnode->front = end.front;
 	tmpnode->front->back = tmpnode;
 	end.front = tmpnode;
+	if (size() == 0) {
+		Next();
+	}
+
 	sizeint++;
 
 }
 
+
+template<class T>
+void LinkedList<T>::push_Now(T data) {
+	Node<T>* tmpnode = new Node<T>;
+	tmpnode->data = data;
+	tmpnode->back = now -> back;
+	tmpnode->front = now;
+	now -> back = tmpnode;
+	tmpnode -> back ->front = tmpnode();
+	if (size() == 0) {
+		Next();
+	}
+
+	sizeint++;
+
+}
 template<class T>
 void LinkedList<T>::push_front(T data) {
 	Node<T>* tmpnode = new Node<T>;
@@ -42,6 +64,10 @@ void LinkedList<T>::push_front(T data) {
 	tmpnode.front = &start;
 	tmpnode.back->front = &tmpnode;
 	start.back = &tmpnode;
+	if (size() == 0) {
+		Next();
+	}
+
 	sizeint++;
 
 }
@@ -93,4 +119,37 @@ bool LinkedList<T>::empty() {
 template<class T>
 int LinkedList<T>::size() {
 	return sizeint;
+}
+
+template<class T>
+void LinkedList<T>::Next() {
+	if (now -> back != &end) {
+		now = now->back;
+	}
+	else {
+		now = start.back;
+	}
+	
+}
+
+template<class T>
+T LinkedList<T>::Now() {
+	return now->data;
+
+}
+
+
+template<class T>
+void LinkedList<T>::pop_Now() {
+	if (sizeint != 0) {
+
+		Node<T>* tmpnode = now;
+		Next();
+		
+		tmpnode->front->back = tmpnode->back;
+		tmpnode->back->front = tmpnode->front;
+
+		delete tmpnode;
+		sizeint--;
+	}
 }
