@@ -1,0 +1,49 @@
+#include<iostream>
+#include"Linked_List.h"
+#include<stack>
+using namespace std;
+
+
+
+int main() {
+	LinkedList<int> deque;
+	LinkedList<int> want;
+	int n, m,ans =0;
+	
+	cin >> n;
+	for (int i = 1; i <= n; i++) {
+		deque.push_back(i);
+	}
+	cin >> m;
+	
+	
+
+
+	for (int i = 0; i < m; i++) {
+		int tmp;
+		cin >> tmp;
+		want.push_back(tmp);
+	}
+	for (int i = 0; i < m; i++) {
+		int cnt = 0;
+
+		while (want.front() != deque.front()) {
+			cnt += 1;
+			deque.push_back(deque.front());
+			deque.pop_front();
+		}
+
+		if (cnt > deque.size() - cnt)
+			cnt = deque.size() - cnt;
+		ans += cnt;
+
+		deque.pop_front();
+		want.pop_front();
+	}
+
+	cout << ans;
+
+
+
+	
+}
