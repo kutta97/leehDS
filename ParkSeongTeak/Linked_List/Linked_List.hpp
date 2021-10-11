@@ -48,7 +48,7 @@ void LinkedList<T>::push_Now(T data) {
 	tmpnode->back = now -> back;
 	tmpnode->front = now;
 	now -> back = tmpnode;
-	tmpnode -> back ->front = tmpnode();
+	tmpnode -> back ->front = tmpnode;
 	if (size() == 0) {
 		Next();
 	}
@@ -59,11 +59,11 @@ void LinkedList<T>::push_Now(T data) {
 template<class T>
 void LinkedList<T>::push_front(T data) {
 	Node<T>* tmpnode = new Node<T>;
-	tmpnode.data = data;
-	tmpnode.back = start.back;
-	tmpnode.front = &start;
-	tmpnode.back->front = &tmpnode;
-	start.back = &tmpnode;
+	tmpnode->data = data;
+	tmpnode->back = start.back;
+	tmpnode->front = &start;
+	tmpnode->back->front = tmpnode;
+	start.back = tmpnode;
 	if (size() == 0) {
 		Next();
 	}
