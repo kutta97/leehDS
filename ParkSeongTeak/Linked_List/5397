@@ -1,0 +1,57 @@
+#include<iostream>
+#include<string>
+#include"Linked_List.h"
+using namespace std;
+
+
+int main() {
+
+	int  n;
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		int idx = 0;
+		LinkedList<pair<int, char>> list;
+		list.push_back({ 0,0 });
+		list.Next();
+		string str;
+		cin >> str;
+		for (int i = 0; i < str.size(); i++) {
+
+			switch (str[i]) {
+			case '<':
+				if (list.Now() != list.front()) {
+					list.Prev();
+				}
+				break;
+			case '>':
+				if (list.Now() != list.back()) {
+					list.Next();
+				}
+				break;
+			case '-':
+				if (list.Now() != list.front()) {
+
+					list.pop_Now();
+					list.Prev();
+
+				}
+				break;
+
+			default:
+				list.push_Now({ idx++,str[i] });
+				list.Next();
+				break;
+
+			}
+		}
+		list.pop_front();
+		while (list.size() != 0) {
+			cout << list.front().second;
+			list.pop_front();
+		}
+		cout << "\n";
+	}
+
+
+
+}
