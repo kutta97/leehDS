@@ -1,0 +1,86 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include"Linked_List.h"
+using namespace std;
+
+
+int main() {
+
+	int  n,m,k;
+	cin >> n;
+	vector<vector<int>> map( n+1 ,vector<int>(n+1,0));
+	map[0][0] = true;
+	int x, y;
+	int idx = 0;
+	int dy[4] = {0, 1, 0, -1};
+	int dx[4] = {1, 0, -1, 0};
+	int timer = 0;
+	char ord;
+	bool end = false;
+
+	cin >> m;
+	for (int i = 0; i < m; i++) {
+
+		cin >> y >> x;
+		map[y][x] = 2;//2는 사과;
+
+	}
+	cin >> k;
+
+	LinkedList<pair<int, char>> Change;
+	for (int i = 0; i < k; i++) {
+		cin >> timer;
+		cin >> ord;
+		Change.push_back({ timer,ord });
+
+		
+	}
+
+	timer = 0;
+	LinkedList<pair<int, int>> worm;
+	worm.push_back({ 1,1 });
+	while (1) {
+		timer++;
+		if (timer == Change.front().first) {
+			if (Change.front().second == 'L') {
+				idx--;
+				if (idx == -1)
+					idx = 3;
+
+			}
+			else if (Change.front().second == 'D') {
+				idx++;
+				if (idx == 4)
+					idx = 0;
+			}
+		}
+		
+		
+		worm.push_front({ worm.front().first + dy[idx] , worm.front().second + dx[idx] });
+		if (worm.front().first > n || worm.front().first <= 0 || worm.front().second > n || worm.front().second <= 0)
+			break;
+		else if (map[worm.front().first][worm.front().second] == 1) {
+			cout << worm.front().first << "," << worm.front().second << "\n";
+			break;
+		}
+		else if (map[worm.front().first][worm.front().second] == 0) {
+			cout << worm.front().first << "," << worm.front().second << "\n";
+			map[worm.front().first][worm.front().second] = 1;
+			
+			map[worm.back().first][worm.back().second] = 0;
+
+			worm.pop_back();
+
+		}
+		else if (map[worm.front().first][worm.front().second] == 2) {
+			cout << worm.front().first << "," << worm.front().second << "\n";
+			map[worm.front().first][worm.front().second] = 1;
+		}
+		
+		
+	}
+
+	cout << timer;
+
+}
