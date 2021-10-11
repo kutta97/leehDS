@@ -43,6 +43,7 @@ public :
 	T back();
 	T Now();
 	void Next();
+	void Prev();
 	
 	
 
