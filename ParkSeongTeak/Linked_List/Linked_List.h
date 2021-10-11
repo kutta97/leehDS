@@ -20,6 +20,7 @@ class LinkedList {
 private:
 	Node<T> start;
 	Node<T> end;
+	Node<T>* now;
 	int sizeint;
 
 public :
@@ -29,17 +30,21 @@ public :
 
 	void push_back(T);
 	void push_front(T);
+	void push_Now(T);
 
 	void pop_front();
 	void pop_back();
+	void pop_Now();
 
 	bool empty();
 	int size();
 
 	T front();
 	T back();
-
-
+	T Now();
+	void Next();
+	
+	
 
 };
 
