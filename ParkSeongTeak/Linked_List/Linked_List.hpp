@@ -132,6 +132,19 @@ void LinkedList<T>::Next() {
 	
 }
 
+
+template<class T>
+void LinkedList<T>::Prev() {
+	if (now -> front != &start) {
+		now = now->front;
+	}
+	else {
+		now = end.front;
+	}
+
+}
+
+
 template<class T>
 T LinkedList<T>::Now() {
 	return now->data;
