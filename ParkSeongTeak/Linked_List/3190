@@ -7,34 +7,33 @@ using namespace std;
 
 int main() {
 
-	int  n,m,k;
+	int  n, m, k;
 	cin >> n;
-	vector<vector<int>> map( n+1 ,vector<int>(n+1,0));
-	map[0][0] = true;
+	vector<vector<int>> map(n + 1, vector<int>(n + 1, 0));
+	map[1][1] = 1;				//시작
 	int x, y;
 	int idx = 0;
-	int dy[4] = {0, 1, 0, -1};
-	int dx[4] = {1, 0, -1, 0};
-	int timer = 0;
-	char ord;
-	bool end = false;
+	int dy[4] = { 0, 1, 0, -1 };	//방향
+	int dx[4] = { 1, 0, -1, 0 };
+	int timer = 0;					//타이머
+	char ord;						//방향 명령어
+	bool end = false;				//끝
 
-	cin >> m;
-	for (int i = 0; i < m; i++) {
+	cin >> m;						//사과
+	for (int i = 0; i < m; i++) {	
 
 		cin >> y >> x;
-		map[y][x] = 2;//2는 사과;
+		map[y][x] = 2;				//2는 사과;
 
 	}
-	cin >> k;
+	cin >> k;						//회전갯수
 
 	LinkedList<pair<int, char>> Change;
 	for (int i = 0; i < k; i++) {
 		cin >> timer;
 		cin >> ord;
-		Change.push_back({ timer,ord });
+		Change.push_back({ timer, ord });
 
-		
 	}
 
 	timer = 0;
@@ -42,6 +41,29 @@ int main() {
 	worm.push_back({ 1,1 });
 	while (1) {
 		timer++;
+		
+
+		worm.push_front({ worm.front().first + dy[idx] , worm.front().second + dx[idx] });
+		if (worm.front().first > n || worm.front().first <= 0 || worm.front().second > n || worm.front().second <= 0)
+			break;
+		else if (map[worm.front().first][worm.front().second] == 1) {
+			//cout << worm.front().first << "," << worm.front().second << "\n";
+			break;
+		}
+		else if (map[worm.front().first][worm.front().second] == 0) {
+			//cout << worm.front().first << "," << worm.front().second << "\n";
+			map[worm.front().first][worm.front().second] = 1;
+
+			map[worm.back().first][worm.back().second] = 0;
+
+			worm.pop_back();
+
+		}
+		else if (map[worm.front().first][worm.front().second] == 2) {
+			//cout << worm.front().first << "," << worm.front().second << "\n";
+			map[worm.front().first][worm.front().second] = 1;
+		}
+
 		if (timer == Change.front().first) {
 			if (Change.front().second == 'L') {
 				idx--;
@@ -54,33 +76,11 @@ int main() {
 				if (idx == 4)
 					idx = 0;
 			}
+			Change.pop_front();
 		}
-		
-		
-		worm.push_front({ worm.front().first + dy[idx] , worm.front().second + dx[idx] });
-		if (worm.front().first > n || worm.front().first <= 0 || worm.front().second > n || worm.front().second <= 0)
-			break;
-		else if (map[worm.front().first][worm.front().second] == 1) {
-			cout << worm.front().first << "," << worm.front().second << "\n";
-			break;
-		}
-		else if (map[worm.front().first][worm.front().second] == 0) {
-			cout << worm.front().first << "," << worm.front().second << "\n";
-			map[worm.front().first][worm.front().second] = 1;
-			
-			map[worm.back().first][worm.back().second] = 0;
 
-			worm.pop_back();
-
-		}
-		else if (map[worm.front().first][worm.front().second] == 2) {
-			cout << worm.front().first << "," << worm.front().second << "\n";
-			map[worm.front().first][worm.front().second] = 1;
-		}
-		
-		
 	}
 
-	cout << timer;
+	cout << timer ;
 
 }
