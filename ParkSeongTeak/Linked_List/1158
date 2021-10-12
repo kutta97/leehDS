@@ -1,0 +1,27 @@
+#include<iostream>
+#include"Linked_List.h"
+#include<stack>
+using namespace std;
+
+
+
+int main() {
+	LinkedList<int> list;
+	int n,m;
+
+	cin >> n>>m;
+	for (int i = 1; i <= n; i++) {
+		list.push_back(i);
+	}
+	cout << "<";
+	
+	while (list.size() > 1) {
+		for (int i = 0; i < m-1; i++) list.Next();
+		cout << list.Now() << ", ";
+		list.pop_Now();
+	}
+	cout << list.Now() << ">";
+
+	
+	
+}
