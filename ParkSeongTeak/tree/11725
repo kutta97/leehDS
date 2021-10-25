@@ -9,11 +9,13 @@ public:
 	Node* Mother;
 	int idx;
 
-	vector<int> Relation;
+	vector<int> Relation;		//처음에는 뭐가 root 인지 모르기 때문에 우선 저장
 };
-vector<Node>arr;
 
-void ARRAY(int i) {
+vector<Node>arr;				// 이쁘게 tree구조로 만들어서 하나하나 서치하면 시간초과
+
+
+void ARRAY(int i) {				//이미 부모노드가 확정된 노드와 연관된 노드중 부모노드가 확정되지 않은 노드가있다면 이 노드가 불확정노드의 부모노드
 	for (const auto& next : arr[i].Relation) {
 		if (!arr[next].haveM) {
 			arr[next].Mother = &arr[i];
@@ -21,7 +23,7 @@ void ARRAY(int i) {
 			ARRAY(next);
 		}
 	}
-	arr[i].Relation.clear();
+	arr[i].Relation.clear();	// 관계확정 후 클리어
 }
 
 int main() {
