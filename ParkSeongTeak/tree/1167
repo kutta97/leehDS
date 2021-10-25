@@ -1,0 +1,61 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+
+void DFS(vector<pair<int, int>>* graph, bool * visit , int& Dist, int &farPoint ,int now, int cost) {
+	if (visit[now]) {
+
+		return;
+	}
+	visit[now] = true;
+	if (Dist < cost) {
+		Dist = cost;
+		farPoint = now;
+	}
+
+	for (const auto next : graph[now]) {
+		DFS(graph,visit,Dist,farPoint, next.first, cost + next.second);
+	}
+}
+
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+
+
+	int V;
+	cin >> V;
+
+	//graph[현재노드] {{연결노드,거리},{연결노드,거리}}
+	vector<pair<int, int>>* graph = new vector<pair<int, int>>[V+1];
+	bool* visit = new bool[V+1];
+	int farPoint = 0;
+	int Dist = 0;
+
+
+
+	for (int i = 0; i < V; i++) {
+		int P1, P2, cost;
+		cin >> P1;
+		while (1) {
+			cin >> P2;
+			if (P2 == -1)
+				break;
+			cin >> cost;
+			graph[P1].push_back({ P2,cost });
+		}
+	}
+
+
+	fill(visit, visit + V + 1, false);
+	DFS(graph, visit, Dist, farPoint, 1, 0);	//한쪽끝 겟
+	fill(visit, visit + V + 1, false);
+	DFS(graph, visit, Dist, farPoint, farPoint, 0);// 다른쪽끝 과 코스트 겟
+	cout << Dist;
+
+}
