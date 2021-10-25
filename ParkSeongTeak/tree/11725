@@ -1,0 +1,76 @@
+#include<iostream>
+#include<vector>
+#include<queue>
+using namespace std;
+
+class Node {
+public:
+	bool haveM = false;
+	Node* Mother;
+	int idx;
+
+	vector<int> Relation;
+};
+vector<Node>arr;
+
+void ARRAY(int i) {
+	for (const auto& next : arr[i].Relation) {
+		if (!arr[next].haveM) {
+			arr[next].Mother = &arr[i];
+			arr[next].haveM = true;
+			ARRAY(next);
+		}
+	}
+	arr[i].Relation.clear();
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int N;
+
+	cin >> N;
+	arr = vector<Node>(N + 1);
+	//queue<int> No;
+
+	for (int i = 0; i < N + 1; i++) {
+		arr[i].idx = i;
+	}
+	arr[1].haveM = true;
+	for (int i = 0; i < N - 1; i++) {
+		int x1, x2;
+		cin >> x1 >> x2;
+		if (arr[x1].haveM) {
+			arr[x2].Mother = &arr[x1];
+			arr[x2].haveM = true;
+		}
+		else if (arr[x2].haveM) {
+			arr[x1].Mother = &arr[x2];
+			arr[x1].haveM = true;
+		}
+		else {
+			arr[x1].Relation.push_back(x2);
+			arr[x2].Relation.push_back(x1);
+		}
+	}
+
+
+
+	for (int i = 2; i <= N; i++) {
+		if (arr[i].haveM && !arr[i].Relation.empty()) {
+			ARRAY(i);
+		}
+	}
+
+
+
+	for (int i = 2; i < N + 1; i++) {
+		cout << (*arr[i].Mother).idx << "\n";
+	}
+
+
+
+}
+
