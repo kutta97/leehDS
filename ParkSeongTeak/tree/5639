@@ -1,0 +1,33 @@
+#include<iostream>
+#include <algorithm> 
+#include <vector>
+#pragma warning(disable:4996)
+using namespace std;
+
+
+void PostO(vector<int>& arr ,int start, int End) {
+	if (start < End) {
+		int begin = arr[start];
+		int right;
+		for (right = start + 1; right < End && begin > arr[right]; right++);
+		PostO(arr,start + 1, right);//left
+		PostO(arr,right, End);		//right
+		cout << begin << "\n";		//root
+	}
+}
+
+
+int main() {
+
+	int Size = 0;
+	vector<int> arr;
+
+
+	int val;
+	while (cin >> val) {
+		if (val == EOF) break;
+		arr.push_back(val);
+		Size++;
+	}
+	PostO(arr, 0, arr.size());
+}

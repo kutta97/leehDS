@@ -1,0 +1,50 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+void preO(int inBegin, int inEnd, int postBegin, int postEnd, int* idx, int* inO, int* postO) {
+
+	if (inBegin > inEnd || postBegin > postEnd)
+		return;
+
+
+	int root = postO[postEnd];
+	cout << root << " ";
+	//왼쪽
+	preO(inBegin, idx[root] - 1, postBegin, postBegin + (idx[root] - inBegin) - 1, idx, inO, postO);
+
+	//오른쪽
+
+	preO(idx[root] + 1, inEnd, postBegin + (idx[root] - inBegin), postEnd - 1, idx, inO, postO);
+
+
+}
+int main() {
+
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int N;
+	cin >> N;
+
+
+	int* idx = new int[N+1];
+	int* postO = new int[N + 1];
+	int* inO = new int[N+1];
+
+
+	for (int i = 0; i < N; i++) {
+		cin >> inO[i];
+	}
+	for (int i = 0; i < N; i++) {
+		cin >> postO[i];
+	}
+	for (int i = 0; i < N; i++) {
+		idx[inO[i]] = i;
+	}
+
+
+	preO(0, N - 1, 0, N - 1, idx, inO, postO);
+}

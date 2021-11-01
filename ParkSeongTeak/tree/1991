@@ -1,0 +1,74 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+
+class Node {
+public:
+	char data;
+	Node* Left;
+	Node* Right;
+};
+
+void preorder(Node* n) {
+	if (n != NULL) {
+		cout << n->data;
+		preorder(n->Left);
+		preorder(n->Right);
+	}
+
+}
+void inorder(Node* n) {
+	if (n != NULL) {
+
+		inorder(n->Left);
+		cout << n->data;
+		inorder(n->Right);
+	}
+}
+void postorder(Node* n) {
+	if (n != NULL) {
+
+		postorder(n->Left);
+		postorder(n->Right);
+		cout << n->data;
+	}
+}
+
+
+int main() {
+
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+
+	int N;
+	cin >> N;
+	N -= 1;
+
+	vector<Node> graph(27);
+
+	for (int i = 0; i < 27; i++) {
+		graph[i].data = 'A' + i;
+	}
+
+	for (int i = 0; i <= N; i++) {
+		char root, left, right;
+		cin >> root >> left >> right;
+		if (left != '.') {
+			graph[root - 'A'].Left = &graph[left - 'A'];
+		}
+		if (right != '.') {
+			graph[root - 'A'].Right = &graph[right - 'A'];
+
+		}
+	}
+	preorder(&graph[0]);
+	cout << "\n";
+	inorder(&graph[0]);
+	cout << "\n";
+	postorder(&graph[0]);
+
+
+}
