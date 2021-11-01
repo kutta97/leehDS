@@ -2,7 +2,6 @@
 #ifndef TREE_H
 #define TREE_H
 
-
 #include <iostream>
 #include <queue>
 using namespace std;
@@ -33,6 +32,8 @@ public:
 	void Delete(K& oldkey) { 
 		Delete(root, oldkey);
 	}
+	void ThreeWayJoin(BST<K, E>& small, K midkey, E midel,BST<K, E>& big);
+	void TwoWayJoin(BST<K, E>& small, BST<K, E>& big);
 
 private: // helper 함수들
 	void Visit(Node<K, E>*);
@@ -174,10 +175,10 @@ void BST<K, E>::Delete(Node<K, E>*& ptr, K& oldkey)
 				return;
 			}
 			else { // rc의 왼쪽 아들이 있으면, 그 아들의 왼쪽아들
-			// 식으로 왼쪽 아들을 끝까지 쫒아가, 가장 작은 키 갖는
-			//노드를 찾아, 그 노드의 key/element를 ptr노드로
-			// 옮기고, 그 노드의 rightChild는 그 노드의 아빠의
-			// leftChild에 저장한 다음 그 노드를 지움
+				// 식으로 왼쪽 아들을 끝까지 쫒아가, 가장 작은 키 갖는
+				//노드를 찾아, 그 노드의 key/element를 ptr노드로
+				// 옮기고, 그 노드의 rightChild는 그 노드의 아빠의
+				// leftChild에 저장한 다음 그 노드를 지움
 				rc->leftSize--;
 				Node<K, E>* lc = rc->leftChild;
 				while (!lc->leftChild) {
@@ -192,6 +193,22 @@ void BST<K, E>::Delete(Node<K, E>*& ptr, K& oldkey)
 			}
 		}
 	}
+}
+template <class K, class E>
+void BST<K, E>::ThreeWayJoin(BST<K, E>& small,
+	K midkey, E midel, BST<K, E>& big) {
+	root = new Node<K, E>(midkey, midel, small.root, big.root);
+	small.root = big.root = 0;
+}
+
+template <class K, class E>
+void BST<K, E>::TwoWayJoin(BST<K, E>& small, BST<K, E>& big) {
+	if (!small.root) { root = big.root; big.root = 0; return; }
+	if (!big.root) { root = small.root; small.root = 0; return; }
+	BST small2 = small;
+	// 이제 small2를 수정하고 midkey와 midel을 알아내어
+	// ThreeWayJoin을 호출하도록 한다
+	small.root = 0; big.root = 0;
 }
 
 #endif
