@@ -1,0 +1,139 @@
+/*
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+
+class Node {
+public:
+	char data;
+	Node* Left;
+	Node* Right;
+};
+
+void preorder(Node* n) {
+	if (n != NULL) {
+		cout << n->data;
+		preorder(n->Left);
+		preorder(n->Right);
+	}
+
+}
+void inorder(Node* n) {
+	if (n != NULL) {
+
+		inorder(n->Left);
+		cout << n->data;
+		inorder(n->Right);
+	}
+}
+void postorder(Node* n) {
+	if (n != NULL) {
+
+		postorder(n->Left);
+		postorder(n->Right);
+		cout << n->data;
+	}
+}
+
+
+int main() {
+
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+
+	int N;
+	cin >> N;
+	N -= 1;
+
+	vector<Node> graph(27);
+
+	for (int i = 0; i < 27; i++) {
+		graph[i].data = 'A' + i;
+	}
+
+	for (int i = 0; i <= N; i++) {
+		char root, left, right;
+		cin >> root >> left >> right;
+		if (left != '.') {
+			graph[root - 'A'].Left = &graph[left - 'A'];
+		}
+		if (right != '.') {
+			graph[root - 'A'].Right = &graph[right - 'A'];
+
+		}
+	}
+	preorder(&graph[0]);
+	cout << "\n";
+	inorder(&graph[0]);
+	cout << "\n";
+	postorder(&graph[0]);
+
+
+}
+*/
+
+//
+// 원래 내 코드와 다른점
+// 
+// 우선 큰 줄기에서 다른점 없음
+// 
+// 배열로 tree구현 
+// 나: class 설계후 pointer을 이용한 접근
+// leaf 이후 종료판단 left ,right -> &Nodearr[0]
+// 
+// 2중 배열을 사용하여 arr[알파벳(data)][왼쪽 , 오른쪽] = next node
+// leaf 이후 종료판단 arr[알파벳(data)][왼쪽 , 오른쪽] = -1
+//
+#include <iostream>
+using namespace std;
+int a[50][2];
+void preorder(int x) {
+    if (x == -1) return;
+    cout << (char)(x + 'A');
+    preorder(a[x][0]);
+    preorder(a[x][1]);
+}
+void inorder(int x) {
+    if (x == -1) return;
+    inorder(a[x][0]);
+    cout << (char)(x + 'A');
+    inorder(a[x][1]);
+}
+void postorder(int x) {
+    if (x == -1) return;
+    postorder(a[x][0]);
+    postorder(a[x][1]);
+    cout << (char)(x + 'A');
+}
+int main() {
+    int n;
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        char x, y, z;
+        cin >> x >> y >> z;
+        x = x - 'A';
+        if (y == '.') {
+            a[x][0] = -1;
+        }
+        else {
+            a[x][0] = y - 'A';
+        }
+        if (z == '.') {
+            a[x][1] = -1;
+        }
+        else {
+            a[x][1] = z - 'A';
+        }
+    }
+    preorder(0);
+    cout << '\n';
+    inorder(0);
+    cout << '\n';
+    postorder(0);
+    cout << '\n';
+    return 0;
+}
+
