@@ -33,6 +33,6 @@ int main(){
 	
 	catch (char const* str)
 	{
-		cerr << "Exception: " << str << endl; return 1;
+		cout << "Exception: " << str << endl; return 1;
 	}
 }
