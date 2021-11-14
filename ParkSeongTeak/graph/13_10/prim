@@ -25,12 +25,15 @@ void prim() {
 		int root0 = sets.Find(0); // 현재 선택된 노드들의 루트를 구한다. //아 ~ 같은 트리에 포함된 노드면 무조껀 한 노드로 흘러들어감
 		//root0은 아직 연결 안된 노드
 		int v;
-		cout << "\n";
-		cout << " root0 : " << root0 << "  e.v1  :  "<<e.v1 <<"  e.v2 :  " << e.v2<<"  sets.Find(e.v1) :  "<< sets.Find(e.v1)<<"   sets.Find(e.v2)  :  "<< sets.Find(e.v2)<<"\n";
+		//cout << "\n";
+		//cout << " root0 : " << root0 << "  e.v1  :  "<<e.v1 <<"  e.v2 :  " << e.v2<<"  sets.Find(e.v1) :  "<< sets.Find(e.v1)<<"   sets.Find(e.v2)  :  "<< sets.Find(e.v2)<<"\n";
 
 		if (sets.Find(e.v1) != root0) v = e.v1;				//둘중 하나라도 트리의 루트로 안 흘러들어가면 
 		else if (sets.Find(e.v2) != root0) v = e.v2;		//그 노드 v로 추가하고 간선 넣고 
-															// 트리에 들어간 노드의 간선만 들어가 있으니 항상 트리에 연결 ㅇㅇ 
+															
+		// 트리에 들어간 노드의 간선만 들어가 있으니 항상 트리에 연결 ㅇㅇ
+		//트리와 연결된걸 이 노드에 부모가 있는기 확인(내 초기 생각) 하는것으로 알 수도 있지만
+		// 이노드의 부모의 부모의 부모를 찾아 트리의 루트까지 접근후 같은 루트인가 확인하는 방법도 있다.
 		else continue;
 
 		sets.Union(e.v1, e.v2); nedges++;
