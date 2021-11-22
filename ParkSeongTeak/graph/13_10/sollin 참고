@@ -1,0 +1,147 @@
+#include <fstream>
+#include< queue >
+#include< algorithm>
+#include"mstree.h"
+int NNODES; //#nodes in the graph is global
+priority_queue< Edge, vector<Edge>, Compare >* PQ;
+//................// 필요함수를 구현하시오
+
+
+void MergePQ(int v, int root) {
+	while (!PQ[v].empty()) {
+		Edge e = PQ[v].top(); PQ[v].pop();
+		PQ[root].push(e);
+	}
+}
+
+void sollin() {
+	Sets sets(NNODES);
+	int nedges = 0; // #edges found up to now
+
+	for (int v = 0; v < NNODES - 1; v++) {
+		if (PQ[v].empty()) throw "No Spanning Tree Exists.";
+		Edge e = PQ[v].top(); PQ[v].pop();
+		int v1root = sets.Find(e.v1); int v2root = sets.Find(e.v2);
+		if (v1root != v2root) {
+			sets.Union(e.v1, e.v2);
+			cout << e; nedges++;
+			int vroot = sets.Find(e.v1);
+			if (!PQ[v2root].empty()) MergePQ(v1root, v2root);
+			else MergePQ(v2root, vroot);
+		}
+	}
+	//첫번째
+	int v = 0;
+	while (nedges < NNODES - 1 && v< NNODES) {
+		if (PQ[v].empty()) { v++; continue; }		//for(int i ) {if(! PQ[i].empty()) { }}이거보다 획기적으로 효율적인가?? 잘 모르겠다
+		
+		Edge e = PQ[v].top(); PQ[v].pop();
+		int v1root = sets.Find(e.v1); int v2root = sets.Find(e.v2);
+		if (v1root != v2root) { // different sets
+			sets.Union(v1root, v2root); nedges++;
+			cout << e;
+		}
+		v++;
+
+	}//v한번 돌아가고 완료?? 가능한가??
+
+}
+// 특이 캐이스 발생시 불가능
+// *****************************************************************************
+// 2번에 해결 불가능하다면 해당 코드는 문제가있다.
+// *****************************************************************************
+/*
+16
+0 4 1  
+1 5 1
+2 6 1
+3 7 1
+8 12 1
+9 13 1
+10 14 1
+11 15 1
+4 5 2
+6 7 2
+12 13 2
+14 15 2
+4 8 3
+6 10 3
+5 9 4
+7 11 4
+*/
+
+//결국 효율적 트리접근방법은 없는가? 한번쯤 생각해볼만한듯
+
+
+
+
+
+
+/*
+void sollin() {	// 코드 참고 이전의 생각 : 
+				// 1 모든 노드에서 가장 짧은 다른 노드로 간선연결
+				// 2 만든 포리스트를 노드취급 = 포리스트의 모든 간선을 루트 노드로 옮김으로 구현
+				// 1 2 를 반복 이는 bool end를 통해 엔드조건을 만들어줄 수 있다.
+	// 1번으로 생각한 방법은 당연히 재귀 다만 그러려면 Set을 밖으로 빼야 하는데 해당 포맷에서는 힘들다고 판단.
+	// 2번으로 생각한것은 int mapping을 통한 루트 확인함수 구현 다만 이전 알고리즘도 이와 같은 맵핑을 통해 시간을 줄일 수 있었다만
+	// 굳이 사용하지 않은 것을 봐서 추가적 메모리 사용을 꺼리는 것으로 보임으로 사용하지 않음
+	// 다만 이 경우 너무 필요 없는 케이스의 확인이 많다..... 아마 큰 생각은 같을 것으로 보이나 이 부분을 어떻게 해결했을까를 중점으로 확인한다.
+	Sets sets(NNODES);
+	
+	int v,v1, v2, tmp;
+	bool end = false;
+	
+	while (!end) {
+		end = true;
+		for (int i = 0; i < NNODES; i++) {
+			if (!PQ[i].empty()) {
+				Edge e = PQ[i].top();
+				PQ[i].pop();
+				if (sets.Find(e.v1) != sets.Find(e.v2)) {
+					v1 = sets.Find(e.v1);
+					v2 = sets.Find(e.v2);
+					sets.Union(e.v1, e.v2);
+					cout << e;
+					end = false;
+
+					tmp = sets.Find(e.v1);
+					if (tmp != v1) v = v1;
+					else v = v2;
+
+					while (!PQ[v].empty()) {
+						PQ[tmp].push(PQ[v].top());
+						PQ[v].pop();
+					}
+
+
+
+				}
+				
+			}
+		}
+	}
+}
+
+*/
+void ReadEdges4sollin() {
+	PQ = new priority_queue<Edge, vector<Edge>, Compare >[NNODES];
+	Edge e;
+
+	while (GetEdge(NNODES, e))
+	{
+		PQ[e.v1].push(e); 
+		PQ[e.v2].push(e);
+	}
+
+}
+
+int main() {
+	
+	cin >> NNODES;
+
+	try { ReadEdges4sollin(); sollin(); }
+	catch (char const* str)
+	{
+		cerr << "Exception: " << str << endl; return 1;
+	}
+}
