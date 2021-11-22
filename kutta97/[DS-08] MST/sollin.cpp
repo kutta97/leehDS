@@ -25,9 +25,7 @@ void sollin() {
 			if  (v1root != v2root) {
 				sets.Union(e.v1, e.v2);
 				cout << e; nedges++;
-				int vroot = sets.Find(e.v1);
-				if (!PQ[v2root].empty()) MergePQ(v1root, v2root);
-				else MergePQ(v2root, vroot);
+				MergePQ(v1root, v2root);
 			}
 		}
 		if (v == NNODES - 1) v = -1;
